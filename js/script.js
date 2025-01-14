@@ -16,8 +16,14 @@ const userNumbers = document.querySelectorAll('.form-control');
 const button = document.querySelector('.btn');
 const message = document.getElementById('message');
 
+// Dichiarazione variabili globali
+let time = 3;
+let difficolta = 5; // Questo è il numero di numeri da ricordare in modo che se cambi non bisogna modificiarlo ovunque
+const arrayRandomN = [];
+const arrayUserN = [];
+const arrayGuessedN = [];
+
 // Imposto il countdown
-let time = 3
 
 const clock = setInterval(() => {
     // Se il tempo arriva a 0 fermo il countdown e nascondo il div di partenza
@@ -42,12 +48,11 @@ function getRandomArbitrary(min, max) {
 }
 
 // Ciclo per aggiungere i numeri randomici con controllo che non ce ne siano uguali
-const arrayRandomN = [];
-for (let i = 0; arrayRandomN.length < 5; i++) {
+for (let i = 0; arrayRandomN.length < difficolta; i++) {
     let n = getRandomArbitrary(1,50);
 
     if (arrayRandomN.includes(n)) {} else {
-        arrayRandomN.push(n);
+        arrayRandomN.push(parseInt(n));
     }
 }
 
@@ -57,8 +62,29 @@ for (let i = 0; i < arrayRandomN.length; i++) {
 }
 
 
-
-
-// Alla fine del countdown nascondo countdown e numeri e faccio comparire le caselle di input
-
 // Confronto l'array dei numeri randomici con l'array dei numeri inseriti dall'utente
+
+// Prendo i numeri inseriti dall'utente al click del bottone
+button.addEventListener('click', (event) => {
+    event.preventDefault();
+    // Ciclo che aggiunge i numeri inseriti dall'utente nell'array
+    for (i = 0; arrayUserN.length < difficolta; i++) {
+        if (arrayUserN.includes(userNumbers[i].value)) {
+            alert("Hai inserito dei numeri uguali");
+            break;
+        } else {
+            arrayUserN.push(parseInt(userNumbers[i].value));
+        }
+    }
+
+    let resultCounter = 0;
+    for (i = 0; i < difficolta; i++) {
+        if (arrayUserN.includes(arrayRandomN[i])) {
+            arrayGuessedN.push(arrayRandomN[i]);
+            resultCounter += 1;
+        }
+    }
+
+    // Messaggio di output
+    message.innerText = `Hai indovinato ${resultCounter} numeri (${arrayGuessedN.toString()})`;
+})
