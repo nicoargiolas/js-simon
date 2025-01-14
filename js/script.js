@@ -77,14 +77,12 @@ button.addEventListener('click', (event) => {
         }
     }
 
-    let resultCounter = 0;
     for (i = 0; i < difficolta; i++) {
         if (arrayUserN.includes(arrayRandomN[i])) {
             arrayGuessedN.push(arrayRandomN[i]);
-            resultCounter += 1;
         }
     }
 
     // Messaggio di output
-    message.innerText = `Hai indovinato ${resultCounter} numeri (${arrayGuessedN.toString()})`;
+    message.innerText = `Hai indovinato ${arrayGuessedN.length} numeri (${arrayGuessedN.toString()})`;
 })
